@@ -7,9 +7,10 @@ namespace UnityArsenal.Core.Input
     {
         #region Fields
 
+        private const int _everythingLayer = -1; //"Everything" layer
+
         private Camera _touchCamera;
-        [SerializeField]
-        private LayerMask _touchLayerMask;
+        private int _touchLayerMask;
         
         #endregion
 
@@ -25,13 +26,11 @@ namespace UnityArsenal.Core.Input
 
         private void Awake()
         {
-            //_touchLayerMask = int.MaxValue;
+            _touchLayerMask = _everythingLayer;
         }
 
         private void Update()
         {
-            Debug.Log(_touchLayerMask.value);
-
             if (UnityEngine.Input.GetMouseButtonUp(0))
             {
                 handleTap(UnityEngine.Input.mousePosition);
@@ -40,20 +39,25 @@ namespace UnityArsenal.Core.Input
 
         private void handleTap(Vector3 mousePosition)
         {
-            const float rayDistance = 5f;
+            const float rayDistance = 10f;
 
-            GameObject clickedObject = null;
+            GameObject tappedObject = null;
 
             if (_touchCamera != null)
             {
                 var mousePositionRay = _touchCamera.ScreenPointToRay(mousePosition);
                 RaycastHit raycastHitInfo;
-                var raycastHit = Physics.Raycast(mousePositionRay, out raycastHitInfo, rayDistance);
+                var raycastHit = Physics.Raycast(mousePositionRay, out raycastHitInfo, rayDistance, _touchLayerMask, QueryTriggerInteraction.Collide);
+
+                if (raycastHit)
+                {
+                    tappedObject = raycastHitInfo.collider.gameObject;
+                }
             }
 
             if (OnTap != null)
             {
-                OnTap(0, TouchPhase.Ended, TouchType.Direct, clickedObject);
+                OnTap(0, TouchPhase.Ended, TouchType.Direct, tappedObject);
             }
         }
 

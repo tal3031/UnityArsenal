@@ -7,7 +7,11 @@ namespace UnityArsenal.Core.Input
     {
         #region Fields
 
+        private const int _everythingLayer = -1; //"Everything" layer
+        private const int defaultTouchIndex = 0;
+
         private Camera _touchCamera;
+        private int _touchLayerMask;
 
         #endregion
 
@@ -16,9 +20,15 @@ namespace UnityArsenal.Core.Input
         public void SetTouchParameters(Camera touchCamera, int touchLayerMask)
         {
             _touchCamera = touchCamera;
+            _touchLayerMask = touchLayerMask;
         }
 
         #region Private Methods
+
+        private void Awake()
+        {
+            _touchLayerMask = _everythingLayer;
+        }
 
         private void Update()
         {
@@ -28,9 +38,7 @@ namespace UnityArsenal.Core.Input
 
         private void handleDefaultTouch()
         {
-            const int defaultTouchIndex = 0;
-
-            var touch = UnityEngine.Input.GetTouch(0);
+            var touch = UnityEngine.Input.GetTouch(defaultTouchIndex);
 
             handleTouch(touch);
         }

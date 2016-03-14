@@ -14,7 +14,7 @@ namespace UnityArsenal.Application
             private set;
         }
 
-        public LogManager LogManager
+        public ILog Logger
         {
             get;
             private set;
@@ -36,15 +36,15 @@ namespace UnityArsenal.Application
 
             try
             {
-                LogManager = InitLogManager();
+                Logger = InitLogger();
                 OnAwake();
             }
             catch (Exception ex)
             {
-                LogManager.Logger.Log(ex);
+                Logger.Log(ex);
             }
 
-            LogManager.Logger.Log("Unity app awake", LogType.Log);
+            Logger.Log("Unity app awake", LogType.Log);
         }
 
         private void Start()
@@ -55,10 +55,10 @@ namespace UnityArsenal.Application
             }
             catch (Exception ex)
             {
-                LogManager.Logger.Log(ex);
+                Logger.Log(ex);
             }
 
-            LogManager.Logger.Log("Unity app start", LogType.Log);
+            Logger.Log("Unity app start", LogType.Log);
         }
 
         private void OnDestroy()
@@ -76,7 +76,7 @@ namespace UnityArsenal.Application
             }
             catch (Exception ex)
             {
-                LogManager.Logger.Log(ex);
+                Logger.Log(ex);
             }
         }
 
@@ -84,7 +84,7 @@ namespace UnityArsenal.Application
 
         #region Protected Methods
 
-        protected abstract LogManager InitLogManager();
+        protected abstract ILog InitLogger();
 
         protected virtual void OnAwake()
         {

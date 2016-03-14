@@ -45,7 +45,6 @@
     <Compile Include="Input\IUnityTouchInputManager.cs" />
     <Compile Include="Input\MouseTouchInputManager.cs" />
     <Compile Include="Input\TouchInputManager.cs" />
-    <Compile Include="Log\LogManager.cs" />
     <Compile Include="Log\ILog.cs" />
     <Compile Include="Log\UnityEditorLog.cs" />
     <Compile Include="Log\UnityRuntimeLog.cs" />
