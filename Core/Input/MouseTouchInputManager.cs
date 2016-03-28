@@ -1,10 +1,15 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UnityArsenal.Core.Input
 {
     public class MouseTouchInputManager : MonoBehaviour, IUnityTouchInputManager
     {
+        #region Events
+
+        public event TouchEvent OnTap;
+
+        #endregion
+
         #region Fields
 
         private const int _everythingLayer = -1; //"Everything" layer
@@ -14,12 +19,40 @@ namespace UnityArsenal.Core.Input
         
         #endregion
 
-        public event TouchEvent OnTap;
+        #region Props
 
+        public bool IsEnabled
+        {
+            get;
+            private set;
+        }
+
+        #endregion
+        
         public void SetTouchParameters(Camera touchCamera, int touchLayerMask)
         {
             _touchCamera = touchCamera;
             _touchLayerMask = touchLayerMask;
+        }
+
+        public void Enable()
+        {
+            if (IsEnabled)
+            {
+                return;
+            }
+
+            IsEnabled = true;
+        }
+
+        public void Disable()
+        {
+            if (!IsEnabled)
+            {
+                return;
+            }
+
+            IsEnabled = false;
         }
 
         #region Private Methods
@@ -31,6 +64,11 @@ namespace UnityArsenal.Core.Input
 
         private void Update()
         {
+            if (!IsEnabled)
+            {
+                return;
+            }
+
             if (UnityEngine.Input.GetMouseButtonUp(0))
             {
                 handleTap(UnityEngine.Input.mousePosition);
@@ -60,7 +98,7 @@ namespace UnityArsenal.Core.Input
                 OnTap(0, TouchPhase.Ended, TouchType.Direct, tappedObject);
             }
         }
-
+        
         #endregion
     }
 }

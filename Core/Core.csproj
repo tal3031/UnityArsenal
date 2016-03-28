@@ -42,6 +42,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\INotifyingCommand.cs" />
     <Compile Include="Input\IUnityTouchInputManager.cs" />
     <Compile Include="Input\MouseTouchInputManager.cs" />
     <Compile Include="Input\TouchInputManager.cs" />
@@ -49,6 +51,8 @@
     <Compile Include="Log\UnityEditorLog.cs" />
     <Compile Include="Log\UnityRuntimeLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\BaseUIWindow.cs" />
+    <Compile Include="UI\IUIWindow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

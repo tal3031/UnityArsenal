@@ -7,6 +7,11 @@ namespace UnityArsenal.Core.Input
     public interface IUnityTouchInputManager
     {
         event TouchEvent OnTap;
+
+        bool IsEnabled { get; }
+
         void SetTouchParameters(Camera touchCamera, int touchLayerMask);
+        void Enable();
+        void Disable();
     }
 }
